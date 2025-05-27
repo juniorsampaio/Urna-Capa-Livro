@@ -1,23 +1,24 @@
 function votar(livro) {
-  // Envia o voto para o Google Apps Script
+  // Envia o voto para o Apps Script
   fetch('https://script.google.com/macros/s/AKfycbwRq03rmyrSi_vHC4_ZoHiMfEMOe8CvOh0YfCcCziwmKDWbhgz2LuhI_2V-DwwKjncusA/exec', {
     method: 'POST',
-    mode: 'no-cors',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ livro: livro })
   });
 
-  // Atualiza a tela para agradecimento
+  // Esconde a tela de votação
   document.querySelector('.book-container').style.display = 'none';
-  document.getElementById('agradecimento').style.display = 'flex';
+  document.querySelector('h1').style.display = 'none';
 
-  // Atualiza a imagem na tela de agradecimento
+  // Mostra a tela de agradecimento
+  const agradecimento = document.getElementById('agradecimento');
+  agradecimento.style.display = 'flex';
+
+  // Define a imagem correspondente
   const imagem = document.getElementById('imagemEscolhida');
-  if (livro === 'Capa 1') {
+  if (livro === 'O Pequeno Príncipe') {
     imagem.src = 'pequeno_principe.jpg';
-  } else if (livro === 'Capa 2') {
+  } else if (livro === 'Chapeuzinho Vermelho') {
     imagem.src = 'chapeuzinho_vermelho.jpg';
   }
 
@@ -25,7 +26,7 @@ function votar(livro) {
   const audio = document.getElementById('audioAgradecimento');
   audio.play();
 
-  // Volta para a tela inicial após o áudio
+  // Quando o áudio termina, volta pra tela inicial
   audio.onended = () => {
     location.reload();
   };
