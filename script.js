@@ -1,33 +1,30 @@
+const URL = 'https://script.google.com/macros/s/SEU_ID_DO_SCRIPT/exec';
+
 function votar(livro) {
-  // Envia o voto para o Apps Script
-  fetch('https://script.google.com/macros/s/AKfycbwRq03rmyrSi_vHC4_ZoHiMfEMOe8CvOh0YfCcCziwmKDWbhgz2LuhI_2V-DwwKjncusA/exec', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ livro: livro })
-  });
+    fetch(URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ livro: livro })
+    })
+    .then(() => {
+        document.getElementById('selecionar').style.display = 'none';
+        const agradecimento = document.getElementById('agradecimento');
+        agradecimento.style.display = 'flex';
 
-  // Esconde a tela de votação
-  document.querySelector('.book-container').style.display = 'none';
-  document.querySelector('h1').style.display = 'none';
-
-  // Mostra a tela de agradecimento
-  const agradecimento = document.getElementById('agradecimento');
-  agradecimento.style.display = 'flex';
-
-  // Define a imagem correspondente
-  const imagem = document.getElementById('imagemEscolhida');
-  if (livro === 'CAPA 1') {
-    imagem.src = 'pequeno_principe.jpg';
-  } else if (livro === 'CAPA 2') {
-    imagem.src = 'chapeuzinho_vermelho.jpg';
-  }
-
-  // Toca o áudio de agradecimento
-  const audio = document.getElementById('audioAgradecimento');
-  audio.play();
-
-  // Quando o áudio termina, volta pra tela inicial
-  audio.onended = () => {
-    location.reload();
-  };
+        const imagemEscolhida = document.getElementById('imagemEscolhida');
+        if (livro === 'O Pequeno Príncipe') {
+            imagemEscolhida.src = 'pequeno_principe.jpg';
+        } else if (livro === 'Chapeuzinho Vermelho') {
+            imagemEscolhida.src = 'chapeuzinho_vermelho.jpg';
+        }
+        
+        const audio = document.getElementById('audioAgradecimento');
+        audio.play();
+        audio.onended = () => {
+            location.reload();
+        };
+    })
+    .catch(() => {
+        alert('Erro ao registrar voto. Tente novamente.');
+    });
 }
