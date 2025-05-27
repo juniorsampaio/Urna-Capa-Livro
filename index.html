@@ -7,18 +7,26 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  
   <h1>ESCOLHA A CAPA DO LIVRO</h1>
+  
   <div class="book-container">
     <div class="book" onclick="votar('CAPA 1')">
       <img src="pequeno_principe.jpg" alt="O Pequeno Príncipe">
       <p>CAPA 1</p>
     </div>
+    
     <div class="book" onclick="votar('CAPA 2')">
       <img src="chapeuzinho_vermelho.jpg" alt="Chapeuzinho Vermelho">
       <p>CAPA 2</p>
     </div>
   </div>
 
+  <div id="agradecimento" style="display: none; flex-direction: column; align-items: center; justify-content: center;">
+    <h2>Obrigado por votar!</h2>
+    <img id="imagemEscolhida" src="" alt="Capa Escolhida" style="width: 200px; height: auto;">
+  </div>
+  
   <audio id="audioAgradecimento" src="agradecimento.mp3" preload="auto"></audio>
 
   <script src="script.js"></script>
